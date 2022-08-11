@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Predictive Analysis</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.8">
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <style>
+        body {
+            background-color:silver;
+            }
+    </style>
+    <body>
+        {% block content %}
+        <nav class="navbar navbar-default" style="overflow:-moz-hidden-unscrollable; position: fixed; top: 0; width: 100%;">
+			<div id="navbarCollapse" class="collapse navbar-collapse">
+				<ul class="nav navbar-navv">
+					<a class="navbar-brand" href="/home/"><i class="fa fa-cube"></i><b>AdminPanel</b></a>
+					<li class="active"><a href="/home/" style="color: grey;">Dashboard</a></li>
+					<li><a href={{laptopUrlPattern}} style="color: grey;">Laptops</a></li>
+					<li><a href={{carUrlPattern}} style="color: grey;">Cars</a></li>
+					<li><a href="#" style="color: grey;">FeedBack</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		
+        {% if HomePageBlock %}
+		    {% include 'HomePage.html' %}
+		{% else %}
+			{% include  main_template %}
+		{% endif %}
+		
+        {% endblock %}
+    </body>
+</html>

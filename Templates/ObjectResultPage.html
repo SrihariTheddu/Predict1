@@ -1,0 +1,152 @@
+{% load static %}
+<html>
+	<head>
+	</head>
+  <style>
+            .container{
+                margin-top:50px;
+            }
+            .stretch-card > .card {
+                width: 100%;
+                min-width: 100%;
+            }
+
+            .card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 1px solid #d2d2dc;
+                border-radius: 0;
+            }
+
+            .btn-info {
+                color: #fff;
+                background-color: #3da5f4;
+                border-color: #3da5f4;
+            }
+
+            .btn {
+                font-size: 0.875rem;
+                line-height: 1;
+                font-weight: 400;
+                padding: .7rem 1.5rem;
+                border-radius: 0.1275rem;
+            }
+
+            h6 {
+                font-size: .9375rem;
+            }
+
+  </style>
+  <body style="margin-top:10%;background-color: #fff;">
+  {% block content %}
+  <div class="page-content page-container" id="page-content">
+    <div class="padding">
+      <div class="row container d-flex justify-content-center">
+          <div class="col-md-5">
+            {% if laptopObjectResultBlock %}
+              <div class="card">
+                  <div class="card-body text-center">
+                    <div>
+                      <img src="https://i.dell.com/is/image/DellContent//content/dam/images/products/laptops-and-2-in-1s/inspiron/15-5510-non-touch/in5510nt-cnb-00055lf110-gy.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=631&qlt=100,0&resMode=sharp2&size=631,402" class="img-lg rounded-circle mb-4" alt="profile image" style="width:60%; height:60%;">
+                      <h4></h4>
+                      <p class="text-muted mb-0">{{company}} - {{typename}}</p>
+                    </div>
+                    <p class="mt-2 card-text">
+                      The predicted price of the given model is 
+                    </p>
+                    <button class="btn btn-info btn-sm mt-3 mb-4">{{predictedPrice}}</button>
+
+                <div class="border-top pt-3">
+                  <div class="row">
+                    <div class="col-4">
+                      <h6>{{typename}}</h6>
+                      <p>Model</p>
+                    </div>
+                    <div class="col-4">
+                      <h6>{{os}}</h6>
+                      <p>OS</p>
+                    </div>
+                    <div class="col-4">
+                      <h6>{{cpu}}</h6>
+                      <p>CPU</p>
+                    </div>
+                  </div>
+
+                  <div class="border-top pt-3">
+                    <div class="row">
+                      <div class="col-4">
+                        <h6>{{gpu}}</h6>
+                        <p>GPU</p>
+                      </div>
+                      <div class="col-4">
+                        <h6>{{sdd}}</h6>
+                        <p>SDD</p>
+                      </div>
+                      <div class="col-4">
+                        <h6>{{ram}}</h6>
+                        <p>RAM</p>
+                      </div>
+                    </div>
+
+                    <div class="border-top pt-3">
+                      <div class="row">
+                        <div class="col-4">
+                          <h6>{{resolution}}</h6>
+                          <p>Resolution</p>
+                        </div>
+                        <div class="col-4">
+                          <h6>{{hdd}}</h6>
+                          <p>HDD</p>
+                        </div>
+                        <div class="col-4">
+                          <h6>{{weight}}</h6>
+                          <p>Weight</p>
+                        </div>
+                      </div>
+                  {% endif %}
+
+                  {% if carObjectResultBlock %}
+
+                  <div class="card">
+                    <div class="card-body text-center">
+                        <div>
+                          <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=600" class="img-lg rounded-circle mb-4" alt="car image" style="width:60%; height:60%;">
+                          <h4></h4>
+                          <p class="text-muted mb-0">"{{company}} - {{model}}"</p>
+                        </div>
+                        <p class="mt-2 card-text">
+                            The predicted price of the given model is 
+                        </p>
+                        <button class="btn btn-info btn-sm mt-3 mb-4">{{predictedPrice}}</button>
+                        <div class="border-top pt-3">
+                          <div class="row">
+                            <div class="col-4">
+                              <h6>{{year}}</h6>
+                              <p>Year</p>
+                            </div>
+                            <div class="col-4">
+                              <h6>{{kms_driven}}</h6>
+                              <p>Kms Driven</p>
+                            </div>
+                            <div class="col-4">
+                              <h6>{{fuel_type}}</h6>
+                              <p>Fuel Type</p>
+                            </div>
+
+                    {% endif %}
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+  </body>
+</html>

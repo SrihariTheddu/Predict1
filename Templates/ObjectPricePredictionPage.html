@@ -1,0 +1,632 @@
+{% load static %}
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	</head>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body{
+			background-color: #eee;
+			font-family: 'Poppins', sans-serif;
+		}
+		.wrapper{
+			max-width: 800px;
+			margin: 10px auto;
+		}
+		#upper-section,#lower-section{
+			padding: 30px;
+			border-radius: 10px;
+			min-height: 120px;
+			max-height: fit-content;
+		}
+		h5,h6{
+			font-weight: 600;
+			margin: 0;
+		}
+		select{
+			padding: 0 10px 5px;
+			border: none;
+			width: 98%;
+			font-size: 14px;
+			cursor: pointer;
+		}
+		select:focus{
+			outline: none;
+		}
+		#dropdown p,#account p{
+			margin: 0;
+			font-size: 12px;
+			padding: 0 12px;
+			height: 15px;
+			color: #888;
+		}
+		#middle-section{
+			padding: 30px;
+			border-radius: 10px;
+			min-height: 120px;
+			max-height: fit-content;
+		}
+		a{
+			color: #888;
+			font-size: 14px;
+		}
+		a:hover{
+			text-decoration: none;
+		}
+		#middle-section p{
+			width: 90%;
+			font-size: 14px;
+		}
+		.income{
+			width: 25%;
+		}
+		.form-control:focus{
+			box-shadow: none;
+			outline: none;
+			border: 1px solid #21bf73;
+		}
+		.options{
+			position: relative;
+			padding: 8px 10px 5px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.option{
+			position: relative;
+			padding-left: 40px;
+		}
+		.options label{
+			display: block;
+			cursor: pointer;
+		}
+		.option input{
+			opacity: 0;
+		}
+		.checkmark {
+			position: absolute;
+			top: -1px;
+			left: 0;
+			height: 25px;
+			width: 25px;
+			background-color: #fff;
+			border: 1px solid #ddd;
+			border-radius: 50%;
+		}
+		.option input:checked ~ .checkmark:after {
+			display: block;
+		}
+		.option .checkmark:after{
+			content: "";
+			width: 10px;
+			height: 10px;
+			display: block;
+			background: white;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			border-radius: 50%;
+			transform: translate(-50%,-50%) scale(0);
+			transition: 300ms ease-in-out 0s;
+		}
+		.option input[type="radio"]:checked ~ .checkmark{
+			background: #21bf73;
+			transition: 300ms ease-in-out 0s;
+		}
+		.option input[type="radio"]:checked ~ .checkmark:after{
+			transform: translate(-50%,-50%) scale(1);
+		}
+		.option input[type="radio"]:checked + .options{
+			background-color: red;
+		}
+		#account input{
+			border: none;
+			outline: none;
+			padding-top: 2px;
+			padding-left: 25px;
+		}
+		#account p{
+			padding-top: 4px;
+			padding-left: 25px;
+		}
+		.btn{
+			background: #fff;
+			color: #21bf73;
+			border: 1px solid #21bf73;
+			width: 85%;
+			padding: 12px;
+		}
+		.btn:hover{
+			background-color: #21bf73;
+			color: #fff;
+		}
+		@media(min-width:768px) and (max-width:991px){
+			.option{
+				padding-left: 30px;
+			}
+		}
+		@media(min-width:576px)and (max-width:767px){
+			.income{
+				width: 32%;
+			}
+			#or{
+				display: block;
+				padding: 10px;
+				text-align: center;
+			}
+			.btn{
+				width: 100%;
+			}
+			.col{
+				width: 15%;
+			}
+			.day .option{
+				padding-left: 30px;
+			}
+			.day{
+				padding-right: 10px;
+			}
+		}
+		@media(min-width:300px)and (max-width:575px){
+			.income{
+				width: 60%;
+			}
+			#or{
+				display: block;
+				padding-top: 5px;
+				text-align: center;
+			}
+			.btn{
+				width: 100%;
+			}
+			.day .option .checkmark{
+				width: 20px;
+				height: 20px;
+				top: 2px;
+			}
+			.day .option .checkmark::after{
+				width: 8px;
+				height: 8px;
+				left: 53%;
+				top: 53%;
+			}
+		}
+	</style>
+	<body>
+	
+	<div margin="">
+		{% block content %}
+		<form method='post'>
+			{% csrf_token %}
+		<!-- ***  Company Information section ....*** -->
+
+		{% if carObjectPricePredictionBlock %}
+		<div class="wrapper">
+			<div class="bg-white" id="upper-section">
+				<h2><strong>Car Price Prediction</strong></h2>
+			</div>
+		</div>
+		<div class="wrapper">
+			<div class="bg-white" id="upper-section">
+				<!-- Company Information section ...-->
+				<h5>Car Information</h5>
+				<div class="row pt-3">
+					<!-- Laptop company name block .-->
+					<div class="col-sm-6">
+						<div id="dropdown" class="bg-light rounded border">
+							<p>Company Name</p>
+							<select name="company" id="storename" class="bg-light">
+								{% for company in companies %}
+									<option value="{{company}}">{{company}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<!-- end of Laptop company name block .-->
+					<!-- Laptop product name block .-->
+					<div class="col-sm-6 mt-sm-0 mt-3">
+						<div id="dropdown" class="bg-light rounded border">
+							<p>Model Name</p>
+							<select name="model" id="emp" class="bg-light">
+								{% for model in models %}
+									<option value="{{model}}">{{model}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<!-- Laptop product name block .-->
+				</div>
+			</div>
+			<!-- end of the company information... -->
+
+			<!-- ***  Company Information section ....*** -->
+		<div class="wrapper">
+			<div class="bg-white" id="upper-section">
+				<!-- Company Information section ...-->
+				<h5>Model Information</h5>
+				<div class="row pt-3">
+					<!-- Laptop company name block .-->
+					<div class="col-sm-6">
+						<div id="dropdown" class="bg-light rounded border">
+							<p>Year</p>
+							<select name="year" id="storename" class="bg-light">
+								{% for year in years %}
+									<option value="{{year}}">{{year}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div></div>
+					<!-- end of Laptop company name block .-->
+					<!-- Laptop product name block .-->
+					
+				<div class="mt-3 bg-white" id="middle-section">
+					<div class="d-sm-flex flex-sm-row align-items-center">
+						<h5>KMS Driven</h5>
+					</div>
+					<p class="pt-2 text-muted text-justify">
+						select value in kilometers
+					</p>
+					<div class="rounded" >
+						<input type="number" class="form-control bg-light income" placeholder="kms driven" name="kms_driven" width="100%" required>
+					</div>
+				</div>
+			</div>
+			<!-- end of the company information... -->
+			
+		<!-- SELECT THE RAM CONFIGURATION -->
+			<div class="mt-3 bg-white" id="middle-section">
+		
+				<h5 class="pt-4">Select the Fuel Configuration</h5>
+				<div class="row pt-1">
+					<div class="col-md-4">
+						<div class="options">
+							<label class="option">Diesel
+								<input type="radio" name="fuel_type" value="Diesel">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">LPG
+								<input type="radio" name="fuel_type" value="LPG">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">Petrol
+								<input type="radio" name="fuel_type" value="Petrol" checked>
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+</div>
+			<!-- END OF RAM CONFIGURATION ........-->
+			<div class="wrapper">
+			<div class="mt-3 bg-white" id="lower-section">
+				<div class="row">
+					<div class="col-md-4">
+						<input type="submit" class="btn" value="Predict Price">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% endif %}
+
+		{% if laptopObjectPricePredictionBlock %}
+
+		<div class="wrapper">
+
+			<div class="bg-white" id="upper-section">
+				<h2><strong>Laptop Price Prediction</strong></h2>
+				</div>
+		</div>
+		<div class="wrapper">
+			<div class="bg-white" id="upper-section">
+				<!-- Company Information section ...-->
+				<h5>Laptop Information</h5>
+				<div class="row pt-3">
+					<!-- Laptop company name block .-->
+					<div class="col-sm-6">
+						<div id="dropdown" class="bg-light rounded border">
+							<p>Brand</p>
+							<select name="company" id="storename" class="bg-light">
+								{% for company in companies %}
+									<option value="{{company}}">{{company}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<!-- end of Laptop company name block .-->
+					<!-- Laptop product name block .-->
+					<div class="col-sm-6 mt-sm-0 mt-3">
+						<div id="dropdown" class="bg-light rounded border">
+							<p>Type</p>
+							<select name="typename" id="emp" class="bg-light">
+								{% for typename in typenames %}
+									<option value="{{typename}}">{{typename}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<!-- Laptop product name block .-->
+				</div>
+			</div>
+			<!-- end of the company information... -->
+
+			<div class="wrapper">
+				<!-- Memory conffiguration Block  -->
+				<!-- Memory Information configuration -->
+				<div class="mt-3 bg-white" id="middle-section">
+				<div class="d-sm-flex flex-sm-row align-items-center">
+					<h5>Operating System</h5>
+				</div>
+				<p class="pt-2 text-muted text-justify">
+					Select the Operating system
+				</p>
+				<select name="os" id="emp" class="bg-light rounded border">
+					{% for os in oss %}
+						<option value="{{os}}">{{os}}</option>
+					{% endfor %}
+				</select>
+				</div>
+			<!-- ***  Company Information section ....*** -->
+		<div class="wrapper">
+			<div class="bg-white" id="upper-section">
+				<!-- Company Information section ...-->
+				<h5>Model Information</h5>
+				<div class="row pt-3">
+					<!-- Laptop company name block .-->
+					<div class="col-sm-6">
+						<div id="dropdown" class="bg-light rounded border">
+							<p>Touch Screen</p>
+							<select name="touchscreen" id="storename" class="bg-light">
+									<option value="1">YES</option>
+									<option value="0">NO</option>
+							</select>
+						</div>
+					</div>
+					<!-- end of Laptop company name block .-->
+					<!-- Laptop product name block .-->
+					<div class="col-sm-6 mt-sm-0 mt-3">
+						<div id="dropdown" class="bg-light rounded border">
+							<p>IPS</p>
+							<select name="ips" id="emp" class="bg-light">
+								<option value="1">YES</option>
+								<option value="0">NO</option>
+							</select>
+						</div>
+					</div>
+					<!-- Laptop product name block .-->
+				</div>
+			</div>
+			<!-- end of the company information... -->
+			
+			<!-- Processor Information Block  -->
+			<div class="wrapper">
+				<div class="bg-white" id="upper-section">
+					<h5>Processor Information</h5>
+					<div class="row pt-3">
+						<div class="col-sm-6">
+							<div id="dropdown" class="bg-light rounded border">
+								<p>CPU Configuration</p>
+								<select name="cpu" id="emp" class="bg-light">
+									{% for cpu in cpus %}
+										<option value="{{cpu}}">{{cpu}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-6 mt-sm-0 mt-3">
+							<div id="dropdown" class="bg-light rounded border">
+								<p>GPU Configuration</p>
+								<select name="gpu" id="emp" class="bg-light">
+									{% for gpu in gpus %}
+										<option value="{{gpu}}">{{gpu}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+	
+					</div>
+				</div>
+			<!-- end of Processor Information Block  -->
+
+		<!-- SELECT THE RAM CONFIGURATION -->
+			<div class="mt-3 bg-white" id="middle-section">
+		
+				<h5 class="pt-4">Select the RAM Configuration</h5>
+				<div class="row pt-1">
+					<div class="col-md-4">
+						<div class="options">
+							<label class="option">2GB
+								<input type="radio" name="ram" value="2">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">4GB
+								<input type="radio" name="ram" value="4" checked>
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">6GB
+								<input type="radio" name="ram" value="6">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row pt-1">
+					<div class="col-md-4">
+						<div class="options">
+							<label class="option">8GB
+								<input type="radio" name="ram" value="8">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">12GB
+								<input type="radio" name="ram" value="12">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">16GB
+								<input type="radio" name="ram" value="16">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row pt-1">
+					<div class="col-md-4">
+						<div class="options">
+							<label class="option">24GB
+								<input type="radio" name="ram" value="24">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">32GB
+								<input type="radio" name="ram" value="32">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-4 mt-md-0 mt-3">
+						<div class="options">
+							<label class="option">64GB
+								<input type="radio" name="ram" value="64">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END OF RAM CONFIGURATION ........-->
+
+			<!-- Processor Information Block  -->
+			<div class="wrapper">
+				<div class="bg-white" id="upper-section">
+					<h5>Memory Configuration</h5>
+					<div class="row pt-3">
+						<div class="col-sm-6">
+							<div id="dropdown" class="bg-light rounded border">
+								<p>SSD</p>
+								<select name="sdd" id="emp" class="bg-light">
+									{% for sdd in ssds %}
+										<option value="{{sdd}}">{{sdd}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-6 mt-sm-0 mt-3">
+							<div id="dropdown" class="bg-light rounded border">
+								<p>HDD</p>
+								<select name="hdd" id="emp" class="bg-light">
+									{% for hdd in hdds %}
+										<option value="{{hdd}}">{{hdd}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+	
+					</div>
+				</div>
+
+
+			</div>
+			<!-- end of memory information configuration -->
+			<!-- End of Memory Configuration Block  -->
+
+			
+			
+	
+	
+				</div>
+					<div class="wrapper">
+					<div class="mt-3 bg-white" id="middle-section">
+						<div class="d-sm-flex flex-sm-row align-items-center">
+							<h5>Screen Resolution</h5>
+						</div>
+						<p class="pt-2 text-muted text-justify">
+							Select the screen resolution of the configuration Model.
+						</p>
+						<select name="resolution" id="emp" class="bg-light rounded border">
+							{% for resolution in resolutions %}
+								<option value="{{resolution}}">{{resolution}}</option>
+							{% endfor %}
+						</select>
+						</div>
+				</div>
+
+				<div class="mt-3 bg-white" id="middle-section">
+					<div class="d-sm-flex flex-sm-row align-items-center">
+						<h5>Screen Size</h5>
+					</div>
+					<p class="pt-2 text-muted text-justify">
+						 select screensize in inches
+					</p>
+					<div class="rounded">
+						<input type="text" class="form-control bg-light income" placeholder="Screen size" name="screensize" required>
+					</div>
+				</div>
+
+
+				<div class="mt-3 bg-white" id="middle-section">
+					<div class="d-sm-flex flex-sm-row align-items-center">
+						<h5>Weight</h5>
+					</div>
+					<p class="pt-2 text-muted text-justify">
+						select weight in kgs
+					</p>
+					<div class="rounded">
+						<input type="text" class="form-control bg-light income" placeholder="weight" name="weight" required>
+					</div>
+				</div>
+			<!-- end of Screen Resolution Information Block  -->
+
+			<div class="mt-3 bg-white" id="lower-section">
+				
+				
+				<div class="row">
+					
+					<div class="col-md-4">
+						<input type="submit" class="btn" value="Predict Price">
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		{% endif %}
+	</form>
+	</div>
+	{% endblock %}
+	</body>
+</html>
+
