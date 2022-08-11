@@ -136,9 +136,10 @@ def setResponseObject(dict = {}, **kwargs)-> Dict:
     
 def main(request: WSGIRequest) -> HttpResponse:
     try:
-        setEnviron()
-        setResponseObject(HomePageBlock=True)
-        return render(request, "IndexPage.html", responseAsJsonObject | {"main_template":"HomePage.html" } )
+        #setEnviron()
+        #setResponseObject(HomePageBlock=True)
+        #return render(request, "IndexPage.html", responseAsJsonObject | {"main_template":"HomePage.html" } )
+        return HttpResponse("<h1>Application Configuration Failed </h1>")
     except ZeroDivisionError as e:
         return HttpResponse("<h1>Application Configuration Failed </h1>")
 
